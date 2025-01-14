@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.validation.Valid;
 import jblog.service.UserService;
 import jblog.vo.UserVo;
 
@@ -25,7 +26,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/join")
-	public String join(@ModelAttribute("userVo") UserVo userVo) {
+	public String join(@ModelAttribute("userVo") @Valid UserVo userVo) {
 		//Valid 처리 추가하기
 		userService.join(userVo);
 		return "redirect:/";

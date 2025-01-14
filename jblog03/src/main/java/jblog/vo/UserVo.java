@@ -1,8 +1,13 @@
 package jblog.vo;
 
+import jakarta.validation.constraints.Size;
+
 public class UserVo {
+	@Size(min=2, max=8)
 	private String id;
+	@Size(min=2, max=8)
 	private String name;
+	@Size(min=4, max=8)
 	private String password;
 	
 	
