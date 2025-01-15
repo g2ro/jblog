@@ -3,13 +3,15 @@ package jblog.vo;
 import jakarta.validation.constraints.Size;
 
 public class UserVo {
-	@Size(min=2, max=8)
-	private String id;
-	@Size(min=2, max=8)
-	private String name;
-	@Size(min=4, max=8)
-	private String password;
 	
+	@Size(min = 2, max = 8)
+	private String id;
+
+	@Size(min = 2, max = 8)
+	private String name;
+
+	@Size(min = 4, max = 16)
+	private String password;
 	
 	public String getId() {
 		return id;
@@ -34,9 +36,5 @@ public class UserVo {
 	public String toString() {
 		return "UserVo [id=" + id + ", name=" + name + ", password=" + password + "]";
 	}
-	
-	
-	
-	
 	
 }

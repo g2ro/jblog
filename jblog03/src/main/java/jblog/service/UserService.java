@@ -10,15 +10,24 @@ import jblog.vo.UserVo;
 public class UserService {
 	private UserRepository userRepository;
 	private BlogService blogService;
+	private CategoryService categoryService;
 	
-	public UserService(UserRepository userRepository, BlogService blogService) {
+	public UserService(UserRepository userRepository, BlogService blogService, CategoryService categoryService) {
 		this.userRepository = userRepository;
 		this.blogService = blogService;
+		this.categoryService = categoryService;
 	}
 	
 	@Transactional
 	public void join(UserVo userVo) {
 		userRepository.insert(userVo);
 		blogService.createBlog(userVo);
+		categoryService.createDefaultCategory(userVo.getId());
 	}
+
+	public UserVo getUser(String id, String password) {
+		return userRepository.findByIdAndPassword(id, password);
+		
+	}
+
 }

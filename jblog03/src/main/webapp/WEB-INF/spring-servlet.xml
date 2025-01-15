@@ -9,7 +9,10 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-	<mvc:annotation-driven/>
+
+	<!-- Validator, ConversionService, MessageConverter를 자동으로 등록 -->
+	<mvc:annotation-driven />
+
 
 	<!-- DefaultServlet Handler -->
 	<mvc:default-servlet-handler />
@@ -29,6 +32,16 @@
 		</property>
 	</bean>
 
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/auth" />
+			<bean class="jblog.security.LoginInterceptor" />
+		</mvc:interceptor>
+
+	</mvc:interceptors>
+
+
 	<context:annotation-config />
-	<context:component-scan base-package="jblog.controller" />
+	<context:component-scan
+		base-package="jblog.controller" />
 </beans>

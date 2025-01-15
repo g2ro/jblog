@@ -1,6 +1,7 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <%@ taglib uri="jakarta.tags.functions" prefix="fn"%>
+<%@page import="java.util.Optional"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!doctype html>
 <html>
@@ -14,15 +15,21 @@
 	<div class="center-content">
 		<h1 class="logo">JBlog</h1>
 		<ul class="menu">
-			<li><a href="">로그인</a></li>
+			<li><a href="${pageContext.request.contextPath }/user/login">로그인</a></li>
 			<li><a href="">회원가입</a></li>
 			<li><a href="">로그아웃</a></li>
 			<li><a href="">내블로그</a></li>
 		</ul>
-		<form class="login-form">
-      		<label>아이디</label> <input type="text" name="id">
-      		<label>패스워드</label> <input type="text" name="password">
+		<form class="login-form" method="post" action="${pageContext.request.contextPath }/user/auth">
+      		<label>아이디</label> <input type="text" name="id" value="${Optional.ofNullable(id).orElse('') }">
+      		<label>패스워드</label> <input type="password" name="password" value="">
+      		<c:if test="${result == 'fail' }">
+      			<p>
+      				로그인에 실패하셨습니다.
+      			</p>
+      		</c:if>
       		<input type="submit" value="로그인">
+      		
 		</form>
 	</div>
 </body>
