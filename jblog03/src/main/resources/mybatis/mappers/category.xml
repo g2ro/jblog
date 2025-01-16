@@ -11,8 +11,11 @@
 	
 	<select id="getCategoryByBlogId" parameterType="String" resultType="categoryvo" >
 	<![CDATA[
-		SELECT * from category
-		WHERE blog_id = #{blog_id}
+		SELECT c.id as id, count(*) as count, c.name as name, c.description as description
+		FROM category c
+			JOIN post p ON (c.id = p.category_id)
+		WHERE c.blog_id = "qwer"
+		GROUP BY p.category_id;
 	]]>
 	</select>
 </mapper>

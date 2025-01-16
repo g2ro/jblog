@@ -36,7 +36,7 @@
 						<tr>
 							<td>${status.index + 1}</td>
 							<td>${categoryVo.name }</td>
-							<td>10</td> <!-- 함수를 이용해서 추가하 -->
+							<td>${categoryVo.count }</td> <!-- 함수를 이용해서 추가하 -->
 							<td>${categoryVo.description }</td>
 							<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
 						</tr>  

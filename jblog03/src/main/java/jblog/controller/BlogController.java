@@ -28,6 +28,7 @@ public class BlogController {
 	public String blogMain(@PathVariable("id") String blogId, Model model) {
 		model.addAttribute("blogId", blogId);
 		Map<String, Object> data = blogService.getMain(blogId);
+		model.addAttribute("CategoryVoList",blogService.getCategory(blogId));
 		model.addAttribute("data", data);
 		return "blog/main";
 	}
