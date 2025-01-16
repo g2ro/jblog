@@ -1,5 +1,6 @@
 package jblog.repository;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -36,7 +37,6 @@ public class BlogRepository {
 
 	public void updateBlogTitleAndLogoFile(String blogId, String title, String url) {
 		sqlSession.update("blog.updateBlogTitleAndLogoFile", Map.of("blogId", blogId, "title", title, "url", url));
-		
 	}
 
 

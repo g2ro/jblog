@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jblog.security.Auth;
 import jblog.service.BlogService;
+import jblog.vo.PostVo;
 
 @Controller
 @RequestMapping("/{id}")
@@ -43,7 +44,6 @@ public class BlogController {
 	@Auth
 	@GetMapping("/admin/basic")
 	public String adminBasic(@PathVariable("id") String blogId, Model model) {
-		model.addAttribute("blogId", blogId);
 		model.addAttribute("blogVo", blogService.getBlogVo(blogId));
 
 		return "blog/admin-basic";
@@ -59,5 +59,41 @@ public class BlogController {
 		blogService.updateBlog(blogId, title, logoFile);
 		
 		return "redirect:/" + blogId;
+	}
+	
+	@Auth
+	@GetMapping("/admin/category")
+	public String adminCategory(@PathVariable("id") String blogId, Model model) {
+		model.addAttribute("CategoryVoList",blogService.getCategory(blogId));
+		return "blog/admin-category";
+	}
+	
+	@Auth
+	@PostMapping("/admin/category/create")
+	public String adminCategoryUpdate(
+			@PathVariable("id") String blogId,
+			@RequestParam("name") String name,
+			@RequestParam("desc") String desc,
+			Model model) {
+		blogService.createBlogCategory(blogId, name, desc);
+		return "redirect:/" + blogId + "/admin/category";
+	}
+	
+	@Auth
+	@GetMapping("/admin/write")
+	public String adminWrite(@PathVariable("id") String blogId, Model model) {
+		model.addAttribute("CategoryVoList",blogService.getCategory(blogId));
+		return "blog/admin-write";
+	}
+	
+	@Auth
+	@PostMapping("/admin/write")
+	public String doWrite(
+			@PathVariable("id") String blogId, 
+			@RequestParam("title") String title,
+			@RequestParam("categoryId") Long CategoryId,
+			@RequestParam("content") String content) {
+		blogService.createWrite(title, CategoryId, content);
+		return "redirect:/" + blogId + "/admin"; // 나중에 자기가 쓴 글로 이동하도
 	}
 }

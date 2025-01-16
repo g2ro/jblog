@@ -18,7 +18,7 @@ public class CategoryService {
 		categoryVo.setName("default");
 		categoryVo.setDescription("디폴트 카테고리입니다.");
 		
-		categoryRepository.createDefaultCategory(categoryVo);
+		categoryRepository.createBlogCategory(categoryVo);
 	}
 	
 	

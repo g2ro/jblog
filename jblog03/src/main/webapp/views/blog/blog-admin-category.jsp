@@ -34,7 +34,7 @@
 		      			<th>설명</th>
 		      			<th>삭제</th>      			
 		      		</tr>
-					<tr>
+		      		<tr>
 						<td>3</td>
 						<td>미분류</td>
 						<td>10</td>

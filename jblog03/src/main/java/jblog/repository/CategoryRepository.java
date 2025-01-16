@@ -1,5 +1,7 @@
 package jblog.repository;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
@@ -18,8 +20,12 @@ public class CategoryRepository {
 		this.sqlSession = sqlSession;
 	}
 	
-	public int createDefaultCategory(CategoryVo vo) {
-		return sqlSession.insert("category.createDefaultCategory", vo);
+	public int createBlogCategory(CategoryVo vo) {
+		return sqlSession.insert("category.createBlogCategory", vo);
+	}
+
+	public List<CategoryVo> getCategoryByBlogId(String blogId) {
+		return sqlSession.selectList("category.getCategoryByBlogId", blogId);
 	}
 	
 }
