@@ -8,4 +8,29 @@
 		VALUES (#{blog_id}, #{title}, #{profile})
 	]]>
 	</insert>
+	
+	<select id="getBlogByBlogId" parameterType="String" resultType="blogvo">
+	<![CDATA[
+		SELECT blog_id, title, profile
+		FROM blog
+		WHERE blog_id = #{blog_id}
+	]]>
+	</select>
+
+	<update id="updateBlogTitle" parameterType="map">
+	<![CDATA[
+		UPDATE blog
+		SET title = #{title}
+		WHERE blog_id = #{blogId}
+	]]>
+	</update>
+	
+	<update id="updateBlogTitleAndLogoFile" parameterType="map">
+	<![CDATA[
+		UPDATE blog
+		SET title = #{title},
+			profile = #{url}
+		WHERE blog_id = #{blogId}
+	]]>
+	</update>
 </mapper>

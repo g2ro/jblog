@@ -16,7 +16,9 @@
 
 	<!-- DefaultServlet Handler -->
 	<mvc:default-servlet-handler />
+	
 
+	
 	<!-- View Resolver -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -37,8 +39,23 @@
 			<mvc:mapping path="/user/auth" />
 			<bean class="jblog.security.LoginInterceptor" />
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout" />
+			<bean class="jblog.security.LogoutInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/user/auth" />
+			<mvc:exclude-mapping path="/user/logout" />
+			<mvc:exclude-mapping path="/assets/**" />
+			<bean class="jblog.security.AuthInterceptor" />
+		</mvc:interceptor>
 
 	</mvc:interceptors>
+
+	<!-- mvc url-resource mapping -->
+	<mvc:resources mapping="/assets/upload_images/**" 
+    location="file:/Users/kilho/jblog-uploads/"/>
 
 
 	<context:annotation-config />

@@ -44,17 +44,7 @@ public class UserController {
 	
 	@GetMapping("/login")
 	public String login() {
-		System.out.println("!!!!!!!!!!!!!!!");
 		return "user/login";
 	}
 	
-//	@PostMapping("/login")
-//	public String login(@RequestParam("id") String id, @RequestParam("password") String password) {
-//		UserVo vo = new UserVo();
-//		vo = userService.getUser(id, password);
-//		System.out.println(vo.getId());
-//		System.out.println(vo.getName());
-//		System.out.println(vo.getPassword());
-//		return "redirect:/";
-//	}
 }
