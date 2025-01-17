@@ -1,6 +1,7 @@
 package jblog.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -25,8 +26,12 @@ public class CategoryRepository {
 	}
 
 	public List<CategoryVo> getCategoryByBlogId(String blogId) {
-		System.out.println(blogId);
 		return sqlSession.selectList("category.getCategoryByBlogId", blogId);
+	}
+
+	public void deleteCategory(String blogId, String categoryId) {
+		sqlSession.delete("category.deleteCategory", Map.of("blogId", blogId, "categoryId", categoryId));
+		
 	}
 	
 }

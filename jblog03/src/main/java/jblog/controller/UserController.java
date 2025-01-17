@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.validation.Valid;
+import jblog.dto.JsonResult;
 import jblog.service.UserService;
 import jblog.vo.UserVo;
 
@@ -45,6 +47,15 @@ public class UserController {
 	@GetMapping("/login")
 	public String login() {
 		return "user/login";
+	}
+	
+	@GetMapping("/checkblogId")
+	@ResponseBody
+	public JsonResult checkEmail(@RequestParam(value = "blogId", required=true, defaultValue="") String blogId) {
+		System.out.println("hello");
+		UserVo userVo = userService.getUserById(blogId);
+		
+		return JsonResult.success(Map.of("exist", userVo != null));
 	}
 	
 }

@@ -33,6 +33,9 @@ public class CategoryService {
 		categoryRepository.createBlogCategory(vo);
 		
 	}
+	public void deleteCategory(String blogId, String categoryId) {
+		categoryRepository.deleteCategory(blogId, categoryId);
+	}
 	
 	
 }

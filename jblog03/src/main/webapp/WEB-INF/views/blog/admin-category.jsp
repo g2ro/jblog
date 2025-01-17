@@ -38,7 +38,7 @@
 							<td>${categoryVo.name }</td>
 							<td>${categoryVo.count }</td> <!-- 함수를 이용해서 추가하 -->
 							<td>${categoryVo.description }</td>
-							<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
+							<td><a href="${pageContext.request.contextPath }/${authUser.id}/admin/delete/${categoryVo.id}"><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a></td>
 						</tr>  
 					</c:forEach>				  
 				</table>

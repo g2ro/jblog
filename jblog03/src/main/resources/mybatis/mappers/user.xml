@@ -17,4 +17,12 @@
 			AND password = #{password}
 	]]>
 	</select>
+	
+	<select id="getUserById" parameterType="string" resultType="uservo">
+	<![CDATA[
+		SELECT id, name
+		FROM user
+		WHERE id = #{blogId}
+	]]>
+	</select>	
 </mapper>

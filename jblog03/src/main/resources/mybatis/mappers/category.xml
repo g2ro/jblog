@@ -18,4 +18,13 @@
 		GROUP BY c.id;
 	]]>
 	</select>
+	<delete id="deleteCategory" parameterType="map">
+	<![CDATA[
+		DELETE FROM category
+		WHERE blog_id = #{blogId}
+			AND id = #{categoryId}
+		    AND (SELECT count(*) FROM post
+				WHERE category_id = #{categoryId}) = 0;
+	]]>
+	</delete>
 </mapper>

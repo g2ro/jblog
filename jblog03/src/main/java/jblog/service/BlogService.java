@@ -86,6 +86,10 @@ public class BlogService {
 		return postService.getPostVoById(blogId, path1, path2);
 		
 	}
+	public void deleteCategory(String blogId, String categoryId) {
+		categoryService.deleteCategory(blogId, categoryId);
+		
+	}
 	
 	
 	

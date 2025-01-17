@@ -30,4 +30,8 @@ public class UserService {
 		
 	}
 
+	public UserVo getUserById(String blogId) {
+		return userRepository.getUserById(blogId);
+	}
+
 }
