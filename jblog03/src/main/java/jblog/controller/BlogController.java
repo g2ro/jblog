@@ -1,5 +1,7 @@
 package jblog.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -24,12 +26,49 @@ public class BlogController {
 		this.blogService = blogService;
 	}
 	
-	@GetMapping("")
-	public String blogMain(@PathVariable("id") String blogId, Model model) {
+	@GetMapping({"", "/{path1:^[0-9]*$}", "/{path1:^[0-9]*$}/{path2:^[0-9]*$}"})
+	public String blogMain(
+			@PathVariable("id") String blogId,
+			@PathVariable(value="path1", required = false) Integer path1,
+			@PathVariable(value="path2", required = false) Integer path2,
+			Model model) {
+		
 		model.addAttribute("blogId", blogId);
 		Map<String, Object> data = blogService.getMain(blogId);
 		model.addAttribute("CategoryVoList",blogService.getCategory(blogId));
 		model.addAttribute("data", data);
+		List<PostVo> postList = new ArrayList<PostVo>();
+		PostVo vo = new PostVo();
+		
+		if(path1 == null) {
+			postList = blogService.getDefaultCategoryPostVo(blogId);
+			model.addAttribute("PostVoList", postList);
+			if(postList.size() == 0) {
+				vo.setTitle("글이 존재하지 않습니다.");
+				vo.setContents("");
+				model.addAttribute("post", vo);
+				return "blog/main";
+			}
+			model.addAttribute("post", postList.get(0));
+			return "blog/main";
+		}
+		if(path2 == null) {
+			postList = blogService.getPostVo(blogId, path1);
+			model.addAttribute("PostVoList", postList);
+			
+			if(postList.size() == 0) {
+				vo.setTitle("글이 존재하지 않습니다.");
+				vo.setContents("");
+				model.addAttribute("post", vo);
+				return "blog/main";
+			}
+			
+			model.addAttribute("post", postList.get(0));
+			return "blog/main";
+		}
+		
+		model.addAttribute("PostVoList", blogService.getPostVo(blogId, path1));
+		model.addAttribute("post",blogService.getPostVoById(blogId,path1,path2));
 		return "blog/main";
 	}
 	

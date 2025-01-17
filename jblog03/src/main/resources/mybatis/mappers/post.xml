@@ -8,4 +8,41 @@
 		VALUES (NUll, #{categoryId}, #{title}, #{contents}, now())
 	]]>
 	</insert>
+	
+	<select id="getPostVoList" parameterType="map" resultType="postvo">
+	<![CDATA[
+		SELECT p.id as id, category_id as categoryId, title, contents, DATE_FORMAT(reg_date, '%Y/%m/%d') as regDate
+		FROM post p
+			JOIN category c ON(p.category_id = c.id)
+		WHERE category_id = #{path1}
+		AND c.blog_id = #{blogId}
+		ORDER BY id desc;
+	]]>
+	</select>
+	
+	<select id="getDefaultCategoryPostVo" parameterType="String" resultType="postvo">
+	<![CDATA[
+		SELECT p.id AS id, category_id as categoryId, title, contents, DATE_FORMAT(p.reg_date, '%Y/%m/%d') AS regDate
+		FROM post p
+			JOIN category c  ON (p.category_id = c.id)
+		WHERE c.blog_id = #{blogId}
+		  AND c.id = (
+		      SELECT MIN(id) 
+		      FROM category 
+		      WHERE blog_id = #{blogId}
+		  )
+		ORDER BY id desc;
+	]]>
+	</select>
+	
+	<select id="getPostVoById" parameterType="map" resultType='postVo'>
+	<![CDATA[
+		SELECT p.id AS id, category_id as categoryId, title, contents, DATE_FORMAT(p.reg_date, '%Y/%m/%d') AS regDate
+		FROM post p
+			JOIN category c ON (p.category_id = c.id)
+		WHERE c.blog_id = #{blogId}
+			AND p.category_id = #{path1}
+			AND p.id = #{path2};
+	]]>
+	</select>
 </mapper>

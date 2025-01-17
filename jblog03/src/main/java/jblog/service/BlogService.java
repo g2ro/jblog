@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jblog.component.FileUploader;
 import jblog.repository.BlogRepository;
-import jblog.repository.CategoryRepository;
 import jblog.repository.PostRepository;
 import jblog.vo.BlogVo;
 import jblog.vo.CategoryVo;
@@ -19,15 +18,19 @@ import jblog.vo.UserVo;
 @Service
 public class BlogService {
 	private BlogRepository blogRepository;
-	private CategoryRepository categoryRepository;
-	private PostRepository postRepository;
+	private CategoryService categoryService;
+	private PostService postService;
 	private FileUploader fileUploader;
 	
-	public BlogService(BlogRepository blogRepository,FileUploader fileUploader, CategoryRepository categoryRepository, PostRepository postRepository) {
+	public BlogService(
+			BlogRepository blogRepository,
+			FileUploader fileUploader, 
+			CategoryService categoryService, 
+			PostService postService) {
 		this.blogRepository = blogRepository;
 		this.fileUploader = fileUploader;
-		this.postRepository = postRepository;
-		this.categoryRepository = categoryRepository;
+		this.postService = postService;
+		this.categoryService = categoryService;
 	}
 	public void createBlog(UserVo userVo) {
 		
@@ -59,25 +62,28 @@ public class BlogService {
 		
 		
 	}
+	
 	public List<CategoryVo> getCategory(String blogId) {
-		return categoryRepository.getCategoryByBlogId(blogId);
-		
+		return categoryService.getCategoryByBlogId(blogId);
 	}
+	
 	public void createBlogCategory(String blogId, String name, String desc) {
-		CategoryVo vo = new CategoryVo();
-		vo.setBlog_id(blogId);
-		vo.setName(name);
-		vo.setDescription(desc);
-		categoryRepository.createBlogCategory(vo);
+		categoryService.createBlogCategory(blogId, name, desc);
+	}
+	
+	public void createWrite(String title, Long categoryId, String content) {
+		postService.createWrite(title, categoryId, content);
+	}
+	
+	public List<PostVo> getPostVo(String blogId, Integer path1) {
+		return postService.getPostVo(blogId, path1);
 		
 	}
-	public void createWrite(String title, Long categoryId, String content) {
-		PostVo vo = new PostVo();
-		vo.setTitle(title);
-		vo.setCategoryId(categoryId);
-		vo.setContents(content);
-		
-		postRepository.createWrite(vo);
+	public List<PostVo> getDefaultCategoryPostVo(String blogId) {
+		return postService.getDefaultCategoryPostVo(blogId);
+	}
+	public PostVo getPostVoById(String blogId, Integer path1, Integer path2) {
+		return postService.getPostVoById(blogId, path1, path2);
 		
 	}
 	

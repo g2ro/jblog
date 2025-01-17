@@ -25,6 +25,7 @@ public class CategoryRepository {
 	}
 
 	public List<CategoryVo> getCategoryByBlogId(String blogId) {
+		System.out.println(blogId);
 		return sqlSession.selectList("category.getCategoryByBlogId", blogId);
 	}
 	
