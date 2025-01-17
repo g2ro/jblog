@@ -136,4 +136,14 @@ public class BlogController {
 		blogService.createWrite(title, CategoryId, content);
 		return "redirect:/" + blogId + "/admin"; // 나중에 자기가 쓴 글로 이동하도
 	}
+	
+	@Auth
+	@GetMapping("/admin/delete/{categoryId}")
+	public String delete(
+			@PathVariable("id") String blogId,
+			@PathVariable("categoryId") String categoryId
+			) {
+		blogService.deleteCategory(blogId, categoryId);
+		return "redirect:/" + blogId + "/admin/category";
+	}
 }

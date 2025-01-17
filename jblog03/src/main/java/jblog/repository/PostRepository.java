@@ -33,7 +33,7 @@ public class PostRepository {
 		return sqlSession.selectList("post.getDefaultCategoryPostVo", blogId);
 	}
 
-	public PostVo getPostVoById(String blogId, Integer path1, Integer path2) {
+	public PostVo getPostVoById(String blogId, Integer path1, Integer path2) {		
 		return sqlSession.selectOne("post.getPostVoById", Map.of("blogId", blogId, "path1", path1,"path2", path2));
 	}
 	

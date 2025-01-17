@@ -34,8 +34,15 @@ public class PostService {
 	}
 
 	public PostVo getPostVoById(String blogId, Integer path1, Integer path2) {
-		return postRepository.getPostVoById(blogId, path1 ,path2);
-		
+		PostVo vo = null;
+		vo = postRepository.getPostVoById(blogId, path1 ,path2);
+		if(vo == null) {
+			vo = new PostVo();
+			vo.setTitle("잘 못된 URL입니다.");
+			vo.setContents("");
+			return vo; 
+		}
+		return vo;
 	}
 	
 	
