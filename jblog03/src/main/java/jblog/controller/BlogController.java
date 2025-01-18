@@ -26,11 +26,11 @@ public class BlogController {
 		this.blogService = blogService;
 	}
 	
-	@GetMapping({"", "/{path1:^[0-9]*$}", "/{path1:^[0-9]*$}/{path2:^[0-9]*$}"})
+	@GetMapping({"", "/{categoryId:^[0-9]*$}", "/{categoryId:^[0-9]*$}/{postId:^[0-9]*$}"})
 	public String blogMain(
 			@PathVariable("id") String blogId,
-			@PathVariable(value="path1", required = false) Integer path1,
-			@PathVariable(value="path2", required = false) Integer path2,
+			@PathVariable(value="categoryId", required = false) Integer categoryId,
+			@PathVariable(value="postId", required = false) Integer postId,
 			Model model) {
 		
 		model.addAttribute("blogId", blogId);
@@ -40,7 +40,7 @@ public class BlogController {
 		List<PostVo> postList = new ArrayList<PostVo>();
 		PostVo vo = new PostVo();
 		
-		if(path1 == null) {
+		if(categoryId == null) {
 			postList = blogService.getDefaultCategoryPostVo(blogId);
 			model.addAttribute("PostVoList", postList);
 			if(postList.size() == 0) {
@@ -52,8 +52,8 @@ public class BlogController {
 			model.addAttribute("post", postList.get(0));
 			return "blog/main";
 		}
-		if(path2 == null) {
-			postList = blogService.getPostVo(blogId, path1);
+		if(postId == null) {
+			postList = blogService.getPostVo(blogId, categoryId);
 			model.addAttribute("PostVoList", postList);
 			
 			if(postList.size() == 0) {
@@ -67,17 +67,55 @@ public class BlogController {
 			return "blog/main";
 		}
 		
-		model.addAttribute("PostVoList", blogService.getPostVo(blogId, path1));
-		model.addAttribute("post",blogService.getPostVoById(blogId,path1,path2));
+		model.addAttribute("PostVoList", blogService.getPostVo(blogId, categoryId));
+		model.addAttribute("post",blogService.getPostVoById(blogId,categoryId,postId));
 		return "blog/main";
 	}
 	
 	@Auth
-	@GetMapping("/admin")
-	public String adminDefault(@PathVariable("id") String blogId, Model model) {
+	@GetMapping({"/admin", "/admin/{categoryId:^[0-9]*$}", "/admin/{categoryId:^[0-9]*$}/{postId:^[0-9]*$}"})
+	public String adminDefault(
+			@PathVariable("id") String blogId,
+			@PathVariable(value="categoryId", required = false) Integer categoryId,
+			@PathVariable(value="postId", required = false) Integer postId,
+			Model model) {
+		
 		model.addAttribute("blogId", blogId);
 		Map<String, Object> data = blogService.getMain(blogId);
+		model.addAttribute("CategoryVoList",blogService.getCategory(blogId));
 		model.addAttribute("data", data);
+		List<PostVo> postList = new ArrayList<PostVo>();
+		PostVo vo = new PostVo();
+		
+		if(categoryId == null) {
+			postList = blogService.getDefaultCategoryPostVo(blogId);
+			model.addAttribute("PostVoList", postList);
+			if(postList.size() == 0) {
+				vo.setTitle("글이 존재하지 않습니다.");
+				vo.setContents("");
+				model.addAttribute("post", vo);
+				return "blog/main";
+			}
+			model.addAttribute("post", postList.get(0));
+			return "blog/main";
+		}
+		if(postId == null) {
+			postList = blogService.getPostVo(blogId, categoryId);
+			model.addAttribute("PostVoList", postList);
+			
+			if(postList.size() == 0) {
+				vo.setTitle("글이 존재하지 않습니다.");
+				vo.setContents("");
+				model.addAttribute("post", vo);
+				return "blog/main";
+			}
+			
+			model.addAttribute("post", postList.get(0));
+			return "blog/main";
+		}
+		
+		model.addAttribute("PostVoList", blogService.getPostVo(blogId, categoryId));
+		model.addAttribute("post",blogService.getPostVoById(blogId,categoryId,postId));
 		return "blog/main";
 	}
 	

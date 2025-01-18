@@ -24,8 +24,8 @@ public class PostRepository {
 		sqlSession.insert("post.createWrite", vo);
 	}
 
-	public List<PostVo> getPostVoList(String blogId, Integer path1) {
-		return sqlSession.selectList("post.getPostVoList", Map.of("blogId", blogId, "path1", path1));
+	public List<PostVo> getPostVoList(String blogId, Integer categoryId) {
+		return sqlSession.selectList("post.getPostVoList", Map.of("blogId", blogId, "categoryId", categoryId));
 
 	}
 
@@ -33,8 +33,8 @@ public class PostRepository {
 		return sqlSession.selectList("post.getDefaultCategoryPostVo", blogId);
 	}
 
-	public PostVo getPostVoById(String blogId, Integer path1, Integer path2) {		
-		return sqlSession.selectOne("post.getPostVoById", Map.of("blogId", blogId, "path1", path1,"path2", path2));
+	public PostVo getPostVoById(String blogId, Integer categoryId, Integer postId) {		
+		return sqlSession.selectOne("post.getPostVoById", Map.of("blogId", blogId, "categoryId", categoryId,"postId", postId));
 	}
 	
 	

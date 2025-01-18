@@ -25,17 +25,17 @@ public class PostService {
 		
 	}
 
-	public List<PostVo> getPostVo(String blogId, Integer path1) {
-		return postRepository.getPostVoList(blogId, path1);
+	public List<PostVo> getPostVo(String blogId, Integer categoryId) {
+		return postRepository.getPostVoList(blogId, categoryId);
 	}
 
 	public List<PostVo> getDefaultCategoryPostVo(String blogId) {
 		return postRepository.getDefaultCategoryPostVo(blogId);
 	}
 
-	public PostVo getPostVoById(String blogId, Integer path1, Integer path2) {
+	public PostVo getPostVoById(String blogId, Integer categoryId, Integer postId) {
 		PostVo vo = null;
-		vo = postRepository.getPostVoById(blogId, path1 ,path2);
+		vo = postRepository.getPostVoById(blogId, categoryId ,postId);
 		if(vo == null) {
 			vo = new PostVo();
 			vo.setTitle("잘 못된 URL입니다.");

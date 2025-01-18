@@ -75,15 +75,15 @@ public class BlogService {
 		postService.createWrite(title, categoryId, content);
 	}
 	
-	public List<PostVo> getPostVo(String blogId, Integer path1) {
-		return postService.getPostVo(blogId, path1);
+	public List<PostVo> getPostVo(String blogId, Integer categoryId) {
+		return postService.getPostVo(blogId, categoryId);
 		
 	}
 	public List<PostVo> getDefaultCategoryPostVo(String blogId) {
 		return postService.getDefaultCategoryPostVo(blogId);
 	}
-	public PostVo getPostVoById(String blogId, Integer path1, Integer path2) {
-		return postService.getPostVoById(blogId, path1, path2);
+	public PostVo getPostVoById(String blogId, Integer categoryId, Integer postId) {
+		return postService.getPostVoById(blogId, categoryId, postId);
 		
 	}
 	public void deleteCategory(String blogId, String categoryId) {

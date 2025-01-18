@@ -14,7 +14,7 @@
 		SELECT p.id as id, category_id as categoryId, title, contents, DATE_FORMAT(reg_date, '%Y/%m/%d') as regDate
 		FROM post p
 			JOIN category c ON(p.category_id = c.id)
-		WHERE category_id = #{path1}
+		WHERE category_id = #{categoryId}
 		AND c.blog_id = #{blogId}
 		ORDER BY id desc;
 	]]>
@@ -41,8 +41,8 @@
 		FROM post p
 			JOIN category c ON (p.category_id = c.id)
 		WHERE c.blog_id = #{blogId}
-			AND p.category_id = #{path1}
-			AND p.id = #{path2};
+			AND p.category_id = #{categoryId}
+			AND p.id = #{postId};
 	]]>
 	</select>
 </mapper>
