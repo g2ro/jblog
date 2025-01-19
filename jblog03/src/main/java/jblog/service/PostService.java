@@ -27,6 +27,7 @@ public class PostService {
 
 	public List<PostVo> getPostVo(String blogId, Integer categoryId) {
 		return postRepository.getPostVoList(blogId, categoryId);
+		// 잘못된 url 요청 처리
 	}
 
 	public List<PostVo> getDefaultCategoryPostVo(String blogId) {
@@ -38,7 +39,7 @@ public class PostService {
 		vo = postRepository.getPostVoById(blogId, categoryId ,postId);
 		if(vo == null) {
 			vo = new PostVo();
-			vo.setTitle("잘 못된 URL입니다.");
+			vo.setTitle("잘못된 URL입니다.");
 			vo.setContents("");
 			return vo; 
 		}

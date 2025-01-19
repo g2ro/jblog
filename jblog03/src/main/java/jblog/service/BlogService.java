@@ -90,6 +90,50 @@ public class BlogService {
 		categoryService.deleteCategory(blogId, categoryId);
 		
 	}
+	public Map<String, Object> getPostData(String blogId, Integer categoryId, Integer postId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<PostVo> vo = null;
+		PostVo postVo = null;
+		if(categoryId == null) {
+			// default 카테고리와 기본 최신 디폴트 카테고리의 내용을 보여주면 될듯
+			vo = postService.getDefaultCategoryPostVo(blogId);
+			map.put("postVoList", vo);
+			
+			if(vo.size() == 0) {
+				postVo = new PostVo();
+				postVo.setTitle("글이 존재하지 않습니다.");
+				postVo.setContents("현재 카테고리엔 작성될 게시글이 존재하지 않습니다.");
+				map.put("postVo", postVo);
+				return map;
+			}
+			postVo = vo.get(0);
+			map.put("postVo", postVo);
+			return map;
+		}
+		
+		if(postId == null) {
+			// 특정 카테고리와 특정 카테고리의 최신글을 보여주면 될듯
+			vo = postService.getPostVo(blogId, categoryId);
+			map.put("postVoList", vo);
+			if(vo.size() == 0) {
+				postVo = new PostVo();
+				postVo.setTitle("글이 존재하지 않습니다.");
+				postVo.setContents("현재 카테고리엔 작성될 게시글이 존재하지 않습니다.");
+				map.put("postVo", postVo);
+				return map;
+			}
+			postVo = vo.get(0);
+			map.put("postVo", postVo);
+			return map;
+		}
+		
+		// postId에 해당되는 카테고리와 post를 보여주면 됨.
+		vo = postService.getPostVo(blogId, categoryId);
+		postVo = postService.getPostVoById(blogId,categoryId,postId);
+		map.put("postVoList", vo);
+		map.put("postVo", postVo);
+		return map;
+	}
 	
 	
 	

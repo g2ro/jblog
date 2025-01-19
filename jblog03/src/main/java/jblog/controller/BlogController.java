@@ -37,40 +37,12 @@ public class BlogController {
 		Map<String, Object> data = blogService.getMain(blogId);
 		model.addAttribute("CategoryVoList",blogService.getCategory(blogId));
 		model.addAttribute("data", data);
-		List<PostVo> postList = new ArrayList<PostVo>();
-		PostVo vo = new PostVo();
 		
-		if(categoryId == null) {
-			postList = blogService.getDefaultCategoryPostVo(blogId);
-			model.addAttribute("PostVoList", postList);
-			if(postList.size() == 0) {
-				vo.setTitle("글이 존재하지 않습니다.");
-				vo.setContents("");
-				model.addAttribute("post", vo);
-				return "blog/main";
-			}
-			model.addAttribute("post", postList.get(0));
-			return "blog/main";
+		Map<String, Object> postData = blogService.getPostData(blogId, categoryId, postId);
+		model.addAttribute("PostVoList", postData.get("postVoList"));
+		model.addAttribute("post",postData.get("postVo"));
+		return "blog/main";	
 		}
-		if(postId == null) {
-			postList = blogService.getPostVo(blogId, categoryId);
-			model.addAttribute("PostVoList", postList);
-			
-			if(postList.size() == 0) {
-				vo.setTitle("글이 존재하지 않습니다.");
-				vo.setContents("");
-				model.addAttribute("post", vo);
-				return "blog/main";
-			}
-			
-			model.addAttribute("post", postList.get(0));
-			return "blog/main";
-		}
-		
-		model.addAttribute("PostVoList", blogService.getPostVo(blogId, categoryId));
-		model.addAttribute("post",blogService.getPostVoById(blogId,categoryId,postId));
-		return "blog/main";
-	}
 	
 	@Auth
 	@GetMapping({"/admin", "/admin/{categoryId:^[0-9]*$}", "/admin/{categoryId:^[0-9]*$}/{postId:^[0-9]*$}"})
@@ -79,43 +51,14 @@ public class BlogController {
 			@PathVariable(value="categoryId", required = false) Integer categoryId,
 			@PathVariable(value="postId", required = false) Integer postId,
 			Model model) {
-		
 		model.addAttribute("blogId", blogId);
 		Map<String, Object> data = blogService.getMain(blogId);
 		model.addAttribute("CategoryVoList",blogService.getCategory(blogId));
 		model.addAttribute("data", data);
-		List<PostVo> postList = new ArrayList<PostVo>();
-		PostVo vo = new PostVo();
 		
-		if(categoryId == null) {
-			postList = blogService.getDefaultCategoryPostVo(blogId);
-			model.addAttribute("PostVoList", postList);
-			if(postList.size() == 0) {
-				vo.setTitle("글이 존재하지 않습니다.");
-				vo.setContents("");
-				model.addAttribute("post", vo);
-				return "blog/main";
-			}
-			model.addAttribute("post", postList.get(0));
-			return "blog/main";
-		}
-		if(postId == null) {
-			postList = blogService.getPostVo(blogId, categoryId);
-			model.addAttribute("PostVoList", postList);
-			
-			if(postList.size() == 0) {
-				vo.setTitle("글이 존재하지 않습니다.");
-				vo.setContents("");
-				model.addAttribute("post", vo);
-				return "blog/main";
-			}
-			
-			model.addAttribute("post", postList.get(0));
-			return "blog/main";
-		}
-		
-		model.addAttribute("PostVoList", blogService.getPostVo(blogId, categoryId));
-		model.addAttribute("post",blogService.getPostVoById(blogId,categoryId,postId));
+		Map<String, Object> postData = blogService.getPostData(blogId, categoryId, postId);
+		model.addAttribute("PostVoList", postData.get("postVoList"));
+		model.addAttribute("post",postData.get("postVo"));
 		return "blog/main";
 	}
 	
