@@ -13,7 +13,7 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<h1>${data.blogVo.title }</h1>
+			<h1>${blogVo.title }</h1>
 				<c:import url="/WEB-INF/views/includes/blogMenu.jsp"/>
 				
 		</div>
@@ -35,7 +35,7 @@
 
 		<div id="extra">
 			<div class="blog-logo">
-				<img id="profile" src="${pageContext.request.contextPath}${data.blogVo.profile}">
+				<img id="profile" src="${pageContext.request.contextPath}${blogVo.profile}">
 					
 
 			</div>

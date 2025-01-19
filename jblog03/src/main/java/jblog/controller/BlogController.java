@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jblog.security.Auth;
 import jblog.service.BlogService;
+import jblog.vo.BlogVo;
 import jblog.vo.PostVo;
 
 @Controller
@@ -32,15 +33,19 @@ public class BlogController {
 			@PathVariable(value="categoryId", required = false) Integer categoryId,
 			@PathVariable(value="postId", required = false) Integer postId,
 			Model model) {
-		
 		model.addAttribute("blogId", blogId);
-		Map<String, Object> data = blogService.getMain(blogId);
 		model.addAttribute("CategoryVoList",blogService.getCategory(blogId));
-		model.addAttribute("data", data);
 		
-		Map<String, Object> postData = blogService.getPostData(blogId, categoryId, postId);
+		Map<String, Object> postData = blogService.getMain(blogId, categoryId, postId);
+		BlogVo blogVo = (BlogVo) postData.get("blogVo");
+		if(blogVo == null) {
+			return "redirect:/";
+		}
+		
+		model.addAttribute("blogVo", blogVo);
 		model.addAttribute("PostVoList", postData.get("postVoList"));
 		model.addAttribute("post",postData.get("postVo"));
+		
 		return "blog/main";	
 		}
 	
@@ -52,15 +57,20 @@ public class BlogController {
 			@PathVariable(value="postId", required = false) Integer postId,
 			Model model) {
 		model.addAttribute("blogId", blogId);
-		Map<String, Object> data = blogService.getMain(blogId);
 		model.addAttribute("CategoryVoList",blogService.getCategory(blogId));
-		model.addAttribute("data", data);
 		
-		Map<String, Object> postData = blogService.getPostData(blogId, categoryId, postId);
+		Map<String, Object> postData = blogService.getMain(blogId, categoryId, postId);
+		BlogVo blogVo = (BlogVo) postData.get("blogVo");
+		if(blogVo == null) {
+			return "redirect:/";
+		}
+		
+		model.addAttribute("blogVo", blogVo);
 		model.addAttribute("PostVoList", postData.get("postVoList"));
 		model.addAttribute("post",postData.get("postVo"));
-		return "blog/main";
-	}
+		
+		return "blog/main";	
+		}
 	
 	@Auth
 	@GetMapping("/admin/basic")

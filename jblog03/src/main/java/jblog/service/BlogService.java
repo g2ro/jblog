@@ -41,13 +41,13 @@ public class BlogService {
 		
 		blogRepository.insert(vo);
 	}
-	public Map<String, Object> getMain(String blogId) {
-		BlogVo blogVo = blogRepository.getBlogByBlogId(blogId);
-		Map<String, Object> data = new HashMap<>();
-		data.put("blogVo", blogVo);
-		return data;
-		
-	}
+//	public Map<String, Object> getMain(String blogId) {
+//		BlogVo blogVo = blogRepository.getBlogByBlogId(blogId);
+//		Map<String, Object> data = new HashMap<>();
+//		data.put("blogVo", blogVo);
+//		return data;
+//		
+//	}
 	public BlogVo getBlogVo(String blogId) {
 		return blogRepository.getBlogByBlogId(blogId);
 		
@@ -90,10 +90,12 @@ public class BlogService {
 		categoryService.deleteCategory(blogId, categoryId);
 		
 	}
-	public Map<String, Object> getPostData(String blogId, Integer categoryId, Integer postId) {
+	public Map<String, Object> getMain(String blogId, Integer categoryId, Integer postId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<PostVo> vo = null;
 		PostVo postVo = null;
+		BlogVo blogVo = blogRepository.getBlogByBlogId(blogId);
+		map.put("blogVo", blogVo);
 		if(categoryId == null) {
 			// default 카테고리와 기본 최신 디폴트 카테고리의 내용을 보여주면 될듯
 			vo = postService.getDefaultCategoryPostVo(blogId);
