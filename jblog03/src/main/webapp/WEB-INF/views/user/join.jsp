@@ -37,6 +37,7 @@ $(function () {
             
             $("#img-checkblogId").show();
 			$("#btn-checkblogId").hide();
+			$("#btn-join").removeAttr("disabled");
         },
         error:function(xhr, status, err){
 			console.error(err);
@@ -83,7 +84,7 @@ $(function () {
 				</p>
 			</fieldset>
 
-			<input type="submit" value="가입하기">
+			<input id="btn-join" type="submit" disabled value="가입하기">
 
 		</form:form>
 	</div>
